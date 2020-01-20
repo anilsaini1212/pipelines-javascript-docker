@@ -26,8 +26,8 @@ steps:
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+        repository: dc2registry
+        dockerfile: app/Dockerfile
+        containerRegistry: dc2registry
+        tags: 1
+          
