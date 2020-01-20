@@ -1,22 +1,30 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
-
 variables:
-  imageName: 'pipelines-javascript-docker'
-
-steps:
-- task: Docker@2
-  displayName: Build and push image to container registry
-  inputs:
-    command: buildAndPush
-    repository: dc2registry.azurecr.io
-    dockerfile: '**/dockerfile'
-    containerRegistry: dc2registry
-    tags: |
-      $(Build.BuildId)
-      latest
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'myregistryservice'
+  imageRepository: 'dc2registry'
+  containerRegistry: 'dc2registry.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
+  tag: '$(Build.BuildId)'
+  
+  - stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build
+    displayName: Build job
+    pool:
+      vmImage: 'pipelines-javascript-docker'
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
           
           
