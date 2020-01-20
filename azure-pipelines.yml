@@ -11,7 +11,7 @@ stages:
 - stage: Build
   displayName: Build and push stage
   jobs:
-  -job: Build
+  - job: Build
     displayName: Build job
     pool:
      vmImage: 'pipelines-javascript-docker'
