@@ -2,7 +2,7 @@ trigger:
 - master
 variables:
  # Container registry service connection established during pipeline creation
- dockerRegistryServiceConnection: 'myregistryservice'
+ # dockerRegistryServiceConnection: 'myregistryservice'
  imageRepository: 'dc2registry'
  containerRegistry: 'dc2registry.azurecr.io'
  dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
@@ -22,6 +22,6 @@ stages:
        command: buildAndPush
        repository: $(imageRepository)
        dockerfile: $(dockerfilePath)
-       containerRegistry: $(dockerRegistryServiceConnection)
+ #      containerRegistry: $(dockerRegistryServiceConnection)
        tags: |
         $(tag)
